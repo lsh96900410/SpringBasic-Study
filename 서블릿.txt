@@ -1,0 +1,88 @@
+서블릿은 톰캣 같은 웹 애플리케이션 서버를 직접 설치하고,그 위에 서블릿 코드를 클래스 파일로 빌드해서 올리다음, 톰캣 서버를 실행하면 된다.
+스프링 부트는 톰캣 서버를 내장하고 있으므로, 톰캣 서버 설치 없이 편리하게 서블릿 코드를 실행할 수 있다.
+
+스프링부트는 서블릿을 직접 등록해서 사용할 수 있도록 @ServletComponentScan 을 지원한다.
+
+@WebServlet 어노테이션 [ name : 서블릿 이름 , urlPatterns : URL 매핑 ]
+
+Http 요청을 통해 매핑된 URL이 호출되면 서블릿 컨테이너는 service 메쏘드를 실행한다.
+logging.levle.org.apache.coyote.http11 = debug : HTTP 요청 메시지 로그 --> 개발 단계에서만 적용 (성능저하 )
+
+---------------------------------------------------------------------------------------
+HttpServletRequest 역할
+
+HTTP 요청 메시지를 개발자가 직접 파싱해도되지만, 매우 불편함 
+-> 서블릿은 개발자가 HTTP 요청 메시지를 편리하게 사용할 수 있도록 파싱해줌. 그리고 그 결과를 HttpServletRequest 객체에 담아서 제공한다.
+
+임시 저장소 기능 
+: HTTP 요청부터 응답까지의 라이프사이클을 가진 임시 저장소 객체역할을 함
+
+세션 관리 기능
+---------------------------------------------------------------------------------------
+HTTP 요청 메세지 
+
+	START LINE
+HTTP 메소드 , URL , 쿼리 스트링 , 스키마 , 프로토콜
+
+	HEADER
+헤더 조회
+
+	BODY
+form 파라미터 형식 조회 , message body 데이터 직접 조회
+
+---------------------------------------------------------------------------------------
+HTTP 요청 데이터는 주로 다음 3가지 방법을 사용하여 전달한다.
+
+1. GET - 쿼리 파라미터 = 검색 , 필터 , 페이징 등에서 많이 사용
+	:메시지 바디없이, URL의 쿼리 파라미터에 데이터를 포함해서 전달하는 방식 
+	--> content-type 설정이 필교없다. 
+	
+	: 서블릿에서 제공하는 HttpServletRequest가 제공하는 .getParameter() 등의 조회 메서드로 편리하게 조회가능
+	
+	
+2. POST - HTML Form == 회원가입, 상품주문 ,HTML Form 사용
+	: content-type :application/x-www-form-urlencded -->HTTP 바디에 포함된 데이터가 어떤 형식인지 알맞은 content-type 설정은 필수 .
+	: 메시지 바디에 쿼리 파라미터 형식으로 전달 (get 요청의 url ? 뒷부분 형식과 동일 )
+
+	: 쿼리파라미터 조회 메서드를 그대로 사용하면된다. --> req.getParameter() 는 GET URL 쿼리파라미터형식도 지원하고 , POST HTML Form 형식도 지원한다.
+
+3. HTTP message body에 데이터 직접 담기 
+	: HTTP API에서 주로 사용 JSON,XML,TEXT 최근에는 거의 JSON이 대부분
+	
+	:InputStream 을 사용해서 직접 읽을 수 있다. byye ->String [Chartset :문자표 지정 ]
+
+	:JSON 데이터를 자바 객체로 변환하려면 Jackson ,Gson 같은 JSON 변환 라이브러리를 사용해야함 
+	-> Spring MVC 를 선택하면 기본으로 Jackson 라이브러리(ObejctMapper)를 함께 제공한다.
+	-> HTML form 데이터도 메시지 바디를 통해 전송되므로 읽을 수 있음.하지만, getParameter()가 더 편리함
+
+---------------------------------------------------------------------------------------
+
+HttpServletResponse 
+ HTTP 응답 메시지 생성 , 편의 기능 제공(Content-Type , 쿠키 , Redirect )
+
+application/json 은 스펙상 UTF-8 형식을 사용하도록 정의되어있다. --> charset=utf-8은 굳이안해도댐
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

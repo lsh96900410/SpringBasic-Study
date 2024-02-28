@@ -1,0 +1,10 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'hello' + ${name}">hello! empty</p>
+</body>
+</html>
+<!--
+타임리프 장점 : 절대경로 입력하면 서버연결 상관없이 html 껍데기? 를 볼수있음
+현재 경로 실행하면 "'hello ' + ${name}" 이 아니라 hello! empty이 보이게됨
+// 템플릿 엔진으로 실행을 하게되면 앞의 내용이 hello! empty을 덮어씀
+-->

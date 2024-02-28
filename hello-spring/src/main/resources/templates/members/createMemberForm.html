@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+  <form action="/members/new" method="post">
+    <div class="form-group">
+      <label for="name">이름</label>
+      <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+      <!--
+      form 중에 input type text 박스에 입력값은 post 방식으로 input 속성 name이 key값으로 저장
+       -- > spring이 MemberForm 클래스에 선언된 String name을 보고 setName 메쏘드를 통해 값 입력해줌
+       -- > 우리는 getName 메쏘드를 통해 입력된 값을 가져올 수 있음
+      -->
+    </div>
+    <button type="submit">등록</button>
+  </form>
+</div> <!-- /container -->
+</body>
+</html>
